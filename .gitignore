@@ -1,0 +1,4 @@
+travel-journal-api/node_modules/
+travel-journal-api/.env
+travel-journal-api/.env.*
+!travel-journal-api/.env.example
