@@ -18,16 +18,17 @@ class TripCard extends StatelessWidget {
     return RepaintBoundary(
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        elevation: 3,
+        elevation: 2,
+        shadowColor: const Color(0xFF1B4332).withValues(alpha: 0.12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(
-            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.3),
+          side: const BorderSide(
+            color: Color(0xFFDCE7E1),
             width: 1,
           ),
         ),
         clipBehavior: Clip.antiAlias,
-        color: const Color(0xFF242424),
+        color: Colors.white,
         child: InkWell(
           onTap: onTap,
           child: Column(
@@ -46,12 +47,12 @@ class TripCard extends StatelessWidget {
                     return Container(
                       height: 120,
                       width: double.infinity,
-                      color: const Color(0xFF2E384D),
+                      color: const Color(0xFFEDF4F0),
                       child: const Center(
                         child: Icon(
                           Icons.image_not_supported_outlined,
                           size: 40,
-                          color: Colors.white54,
+                          color: Colors.grey,
                         ),
                       ),
                     );
@@ -60,11 +61,11 @@ class TripCard extends StatelessWidget {
                     if (loadingProgress == null) return child;
                     return Container(
                       height: 160,
-                      color: const Color(0xFF2E384D),
+                      color: const Color(0xFFEDF4F0),
                       child: const Center(
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          color: Color(0xFFF97316),
+                          color: Color(0xFFD97706),
                         ),
                       ),
                     );
@@ -87,7 +88,7 @@ class TripCard extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: Color(0xFF16382C),
                                 ),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -98,7 +99,7 @@ class TripCard extends StatelessWidget {
                                   const Icon(
                                     Icons.location_on,
                                     size: 16,
-                                    color: Color(0xFFF97316),
+                                    color: Color(0xFFD97706),
                                   ),
                                   const SizedBox(width: 4),
                                   Expanded(
@@ -106,7 +107,7 @@ class TripCard extends StatelessWidget {
                                       trip.destination,
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.grey[300],
+                                        color: Colors.grey[700],
                                         fontWeight: FontWeight.w500,
                                       ),
                                       maxLines: 1,
@@ -130,8 +131,11 @@ class TripCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF1E1E1E),
+                        color: const Color(0xFFFEF3C7),
                         borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: const Color(0xFFFDE68A),
+                        ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -139,14 +143,14 @@ class TripCard extends StatelessWidget {
                           const Icon(
                             Icons.calendar_month,
                             size: 14,
-                            color: Color(0xFFF97316),
+                            color: Color(0xFFB45309),
                           ),
                           const SizedBox(width: 6),
                           Text(
                             '${trip.startDate} - ${trip.endDate}',
                             style: const TextStyle(
                               fontSize: 12,
-                              color: Color(0xFFF97316),
+                              color: Color(0xFF92400E),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -159,7 +163,7 @@ class TripCard extends StatelessWidget {
                         trip.notes,
                         style: TextStyle(
                           fontSize: 13,
-                          color: Colors.grey[400],
+                          color: Colors.grey[600],
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

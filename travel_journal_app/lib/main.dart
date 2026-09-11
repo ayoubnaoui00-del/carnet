@@ -45,17 +45,19 @@ class MyApp extends StatelessWidget {
         scrollBehavior: const SmoothScrollBehavior(),
         theme: ThemeData(
           useMaterial3: true,
-          brightness: Brightness.dark,
-          scaffoldBackgroundColor: const Color(0xFF1a1a1a),
-          colorScheme: const ColorScheme.dark(
-            primary: Color(0xFF2E5090),
-            secondary: Color(0xFFF97316),
-            surface: Color(0xFF242424),
+          brightness: Brightness.light,
+          scaffoldBackgroundColor: Colors.transparent,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFF1B4332),
+            primary: const Color(0xFF1B4332),
+            secondary: const Color(0xFFD97706),
+            surface: Colors.white,
           ),
           appBarTheme: const AppBarTheme(
-            backgroundColor: Color(0xFF2E5090),
+            backgroundColor: Color(0xFF1B4332),
             foregroundColor: Colors.white,
             elevation: 0,
+            centerTitle: false,
           ),
         ),
         home: const TripListScreen(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/add_trip_viewmodel.dart';
+import '../widgets/gradient_background.dart';
 
 class AddTripScreen extends StatefulWidget {
   const AddTripScreen({super.key});
@@ -49,9 +50,11 @@ class _AddTripScreenState extends State<AddTripScreen> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.dark(
-              primary: Color(0xFFF97316),
-              surface: Color(0xFF242424),
+            colorScheme: const ColorScheme.light(
+              primary: Color(0xFF2E5090),
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Color(0xFF1E293B),
             ),
           ),
           child: child!,
@@ -76,9 +79,11 @@ class _AddTripScreenState extends State<AddTripScreen> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.dark(
-              primary: Color(0xFFF97316),
-              surface: Color(0xFF242424),
+            colorScheme: const ColorScheme.light(
+              primary: Color(0xFF2E5090),
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Color(0xFF1E293B),
             ),
           ),
           child: child!,
@@ -134,21 +139,22 @@ class _AddTripScreenState extends State<AddTripScreen> {
       hintText: hint,
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
-      labelStyle: const TextStyle(color: Color(0xFFF97316)),
-      hintStyle: TextStyle(color: Colors.grey[600]),
+      labelStyle: const TextStyle(color: Color(0xFF1B4332), fontWeight: FontWeight.w600),
+      hintStyle: TextStyle(color: Colors.grey[400]),
       filled: true,
-      fillColor: const Color(0xFF242424),
+      fillColor: Colors.white,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Colors.grey),
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFFDCE7E1)),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.grey[700]!),
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFFDCE7E1)),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Color(0xFFF97316), width: 2),
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFF1B4332), width: 2),
       ),
     );
   }
@@ -157,202 +163,206 @@ class _AddTripScreenState extends State<AddTripScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add New Trip'),
-        backgroundColor: const Color(0xFF2E5090),
+        title: const Text('Add New Trip', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        backgroundColor: const Color(0xFF1B4332),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Consumer<AddTripViewModel>(
-        builder: (context, viewModel, child) {
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.all(20),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Plan your journey',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'Capture memories, routes, and personal notes',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[400],
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  TextFormField(
-                    controller: _titleController,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: _inputDecoration(
-                      label: 'Trip Title *',
-                      hint: 'e.g. Summer in Tokyo',
-                      prefixIcon: const Icon(Icons.title, color: Color(0xFFF97316)),
-                    ),
-                    validator: (val) {
-                      if (val == null || val.trim().isEmpty) {
-                        return 'Please enter a trip title';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _destinationController,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: _inputDecoration(
-                      label: 'Destination *',
-                      hint: 'e.g. Tokyo, Japan',
-                      prefixIcon: const Icon(Icons.location_on, color: Color(0xFFF97316)),
-                    ),
-                    validator: (val) {
-                      if (val == null || val.trim().isEmpty) {
-                        return 'Please enter a destination';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _startDateController,
-                          readOnly: true,
-                          style: const TextStyle(color: Colors.white),
-                          onTap: _selectStartDate,
-                          decoration: _inputDecoration(
-                            label: 'Start Date *',
-                            hint: 'YYYY-MM-DD',
-                            suffixIcon: const Icon(
-                              Icons.calendar_today,
-                              color: Color(0xFFF97316),
-                              size: 18,
-                            ),
-                          ),
-                          validator: (val) {
-                            if (val == null || val.trim().isEmpty) {
-                              return 'Required';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _endDateController,
-                          readOnly: true,
-                          style: const TextStyle(color: Colors.white),
-                          onTap: _selectEndDate,
-                          decoration: _inputDecoration(
-                            label: 'End Date *',
-                            hint: 'YYYY-MM-DD',
-                            suffixIcon: const Icon(
-                              Icons.calendar_today,
-                              color: Color(0xFFF97316),
-                              size: 18,
-                            ),
-                          ),
-                          validator: (val) {
-                            if (val == null || val.trim().isEmpty) {
-                              return 'Required';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _imageUrlController,
-                    style: const TextStyle(color: Colors.white),
-                    keyboardType: TextInputType.url,
-                    decoration: _inputDecoration(
-                      label: 'Cover Image URL (optional)',
-                      hint: 'https://example.com/photo.jpg',
-                      prefixIcon: const Icon(Icons.image, color: Color(0xFFF97316)),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _notesController,
-                    maxLines: 4,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: _inputDecoration(
-                      label: 'Journal Notes',
-                      hint: 'What happened? Memorable moments, highlights, tips...',
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  if (viewModel.error != null)
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 16),
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.red.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.redAccent),
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.error_outline, color: Colors.redAccent),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              viewModel.error!,
-                              style: const TextStyle(color: Colors.redAccent),
-                            ),
-                          ),
-                        ],
+      body: GradientBackground(
+        child: Consumer<AddTripViewModel>(
+          builder: (context, viewModel, child) {
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.all(20),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Plan your journey',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF16382C),
                       ),
                     ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 52,
-                    child: ElevatedButton(
-                      onPressed: viewModel.isLoading ? null : _submitForm,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFF97316),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'Capture memories, routes, and personal notes',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[600],
                       ),
-                      child: viewModel.isLoading
-                          ? const SizedBox(
-                              height: 22,
-                              width: 22,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2.5,
-                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                              ),
-                            )
-                          : const Text(
-                              'Save Trip',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                    ),
+                    const SizedBox(height: 24),
+                    TextFormField(
+                      controller: _titleController,
+                      style: const TextStyle(color: Color(0xFF16382C)),
+                      decoration: _inputDecoration(
+                        label: 'Trip Title *',
+                        hint: 'e.g. Summer in Tokyo',
+                        prefixIcon: const Icon(Icons.title, color: Color(0xFF1B4332)),
+                      ),
+                      validator: (val) {
+                        if (val == null || val.trim().isEmpty) {
+                          return 'Please enter a trip title';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _destinationController,
+                      style: const TextStyle(color: Color(0xFF16382C)),
+                      decoration: _inputDecoration(
+                        label: 'Destination *',
+                        hint: 'e.g. Tokyo, Japan',
+                        prefixIcon: const Icon(Icons.location_on, color: Color(0xFF1B4332)),
+                      ),
+                      validator: (val) {
+                        if (val == null || val.trim().isEmpty) {
+                          return 'Please enter a destination';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: _startDateController,
+                            readOnly: true,
+                            style: const TextStyle(color: Color(0xFF16382C)),
+                            onTap: _selectStartDate,
+                            decoration: _inputDecoration(
+                              label: 'Start Date *',
+                              hint: 'YYYY-MM-DD',
+                              suffixIcon: const Icon(
+                                Icons.calendar_today,
+                                color: Color(0xFF1B4332),
+                                size: 18,
                               ),
                             ),
+                            validator: (val) {
+                              if (val == null || val.trim().isEmpty) {
+                                return 'Required';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _endDateController,
+                            readOnly: true,
+                            style: const TextStyle(color: Color(0xFF16382C)),
+                            onTap: _selectEndDate,
+                            decoration: _inputDecoration(
+                              label: 'End Date *',
+                              hint: 'YYYY-MM-DD',
+                              suffixIcon: const Icon(
+                                Icons.calendar_today,
+                                color: Color(0xFF1B4332),
+                                size: 18,
+                              ),
+                            ),
+                            validator: (val) {
+                              if (val == null || val.trim().isEmpty) {
+                                return 'Required';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _imageUrlController,
+                      style: const TextStyle(color: Color(0xFF16382C)),
+                      keyboardType: TextInputType.url,
+                      decoration: _inputDecoration(
+                        label: 'Cover Image URL (optional)',
+                        hint: 'https://example.com/photo.jpg',
+                        prefixIcon: const Icon(Icons.image, color: Color(0xFF1B4332)),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _notesController,
+                      maxLines: 4,
+                      style: const TextStyle(color: Color(0xFF16382C)),
+                      decoration: _inputDecoration(
+                        label: 'Journal Notes',
+                        hint: 'What happened? Memorable moments, highlights, tips...',
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    if (viewModel.error != null)
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 16),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.red.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.redAccent),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.error_outline, color: Colors.redAccent),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                viewModel.error!,
+                                style: const TextStyle(color: Colors.redAccent),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 52,
+                      child: ElevatedButton(
+                        onPressed: viewModel.isLoading ? null : _submitForm,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF1B4332),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          elevation: 2,
+                        ),
+                        child: viewModel.isLoading
+                            ? const SizedBox(
+                                height: 22,
+                                width: 22,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.5,
+                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                ),
+                              )
+                            : const Text(
+                                'Save Trip',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
